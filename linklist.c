@@ -101,15 +101,52 @@ struct node* delete(int value){
    }
 }
 
+// inserts element at the specified index in the list
+void insertatindex(int index,int data){
+    int count=0;
+    if(isEmpty()){
+        if(index!=0){
+            printf("List is empty, insertion at only index 0 is allowed!!");
+        }else{
+            insertFirst(data);
+            printf("Insertion successful..");
+        }
+    }else{
+        if(index == 0){
+            insertFirst(data);
+            printf("Insertion successful!!");
+            return;
+        }
+        while(index>size()){
+            printf("Element cannot be added to the desired index!!\n");
+            printf("Please choose your index again\n");
+            scanf("%d",&index);
+        }
+
+        struct node *newnode = malloc(sizeof(struct node));
+        struct node *temp = head;
+        newnode->data = data;
+        int i;
+        for(i=1;i<index-1;i++){
+            temp = temp->next;
+        }
+        newnode->next = temp->next;
+        temp->next = newnode->next;
+    }
+}
 int main(){
     insertFirst(2);
     insertFirst(1);
     insertFirst(6);
     insertFirst(7);
-    delete(6);
-
+    insertatindex(0,3);
+    insertatindex(3,0);
+    printf("The list is:\n");
     display();
-    printf("%d",size());
+    delete(6);
+    printf("\nThe new list is:\n");
+    display();
+    printf("The size is: %d\n",size());
     search(2);
     return 0;
 }
